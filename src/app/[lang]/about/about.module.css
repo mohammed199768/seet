@@ -1,0 +1,36 @@
+.lead {
+  background: var(--white);
+  padding-block: 0 clamp(64px, 9vw, 140px);
+}
+.leadText {
+  color: var(--navy);
+  font-size: clamp(1.75rem, 0.9rem + 3vw, 4.25rem);
+  max-width: 24ch;
+}
+.wide {
+  position: relative;
+  height: clamp(320px, 62vw, 900px);
+  overflow: hidden;
+  background: var(--navy);
+}
+.wide img {
+  object-fit: cover;
+}
+.story {
+  background: var(--white);
+  padding-block: clamp(72px, 10vw, 160px);
+}
+.storyGrid {
+  display: grid;
+  grid-template-columns: minmax(140px, 2fr) 7fr 3fr;
+  gap: clamp(24px, 4vw, 64px);
+}
+.storyGrid .label {
+  color: var(--navy);
+  padding-block-start: 0.6em;
+}
+@media (max-width: 760px) {
+  .storyGrid {
+    grid-template-columns: 1fr;
+  }
+}

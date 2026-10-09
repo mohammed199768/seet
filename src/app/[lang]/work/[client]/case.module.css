@@ -1,0 +1,130 @@
+.hero {
+  background: var(--white);
+  color: var(--navy);
+}
+.heroInner {
+  display: grid;
+  gap: clamp(24px, 3vw, 44px);
+  padding-block: calc(117px + clamp(40px, 6vw, 96px)) clamp(56px, 8vw, 120px);
+}
+.back {
+  display: flex;
+}
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.backLink svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+:global([dir="rtl"]) .backLink svg {
+  transform: scaleX(-1);
+}
+.title {
+  --ext: var(--ink);
+  --s: 0.007em;
+  font-size: clamp(3rem, 1rem + 9vw, 11rem);
+}
+.meta {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(28px, 5vw, 96px);
+  align-items: start;
+  color: var(--ink);
+  border-top: 2px solid var(--ink);
+  padding-block-start: 28px;
+}
+.dl {
+  display: grid;
+  gap: 18px;
+}
+.dl dt {
+  margin-block-end: 4px;
+  opacity: 0.65;
+}
+.dl dd {
+  margin: 0;
+  font-weight: 700;
+}
+.svc {
+  border-bottom: 2px solid currentColor;
+}
+.svc:hover {
+  color: var(--navy);
+}
+.summary {
+  font-weight: 500;
+}
+
+.showcase {
+  background: var(--navy);
+  padding-block: clamp(72px, 10vw, 160px);
+  overflow: hidden;
+}
+.trio {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(14px, 2vw, 32px);
+}
+.shot {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--navy-deep);
+}
+.shot img {
+  object-fit: cover;
+}
+.shotA {
+  grid-column: 1 / span 5;
+  box-shadow: -14px 14px 0 var(--ink);
+}
+.shotB {
+  grid-column: 7 / span 3;
+  margin-block-start: 18%;
+}
+.shotC {
+  grid-column: 10 / span 3;
+  margin-block-start: 48%;
+}
+
+.feed {
+  background: var(--white);
+  padding-block: clamp(80px, 11vw, 160px);
+}
+.feedHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 1000px;
+  margin: 0 auto clamp(28px, 4vw, 48px);
+  color: var(--navy);
+}
+@media (max-width: 860px) {
+  .meta {
+    grid-template-columns: 1fr;
+  }
+  .shotA {
+    grid-column: 1 / -1;
+  }
+  .shotB {
+    grid-column: 1 / span 6;
+    margin: 0;
+  }
+  .shotC {
+    grid-column: 7 / span 6;
+    margin-block-start: 20%;
+  }
+}

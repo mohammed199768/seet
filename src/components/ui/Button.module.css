@@ -1,0 +1,115 @@
+.mag {
+  display: inline-block;
+}
+.btn {
+  --d: 6px;
+  --ext: var(--ink);
+  --bg: var(--navy);
+  --fg: var(--white);
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+  margin-inline-start: var(--d);
+  margin-block-end: var(--d);
+  border-radius: 999px;
+  text-align: center;
+}
+/* the block underneath — same down-left fall as the logo */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--ext);
+  transform: translate(calc(var(--d) * -1), var(--d));
+}
+.face {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0.95em 1.6em 0.95em 1.7em;
+  border-radius: inherit;
+  background: var(--bg);
+  color: var(--fg);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: inset 0 0 0 2px var(--ext);
+  transition:
+    transform 0.35s var(--ease-out),
+    background-color 0.3s;
+}
+.lg .face {
+  font-size: clamp(1.0625rem, 0.9rem + 0.5vw, 1.375rem);
+  padding: 1.05em 1.8em;
+}
+.btn:hover .face,
+.btn:focus-visible .face {
+  transform: translate(calc(var(--d) * -0.5), calc(var(--d) * 0.5));
+}
+.btn:active .face {
+  transform: translate(calc(var(--d) * -1), var(--d));
+  transition-duration: 0.08s;
+}
+.btn:disabled {
+  cursor: progress;
+}
+.btn:disabled .face {
+  transform: translate(calc(var(--d) * -1), var(--d));
+  opacity: 0.85;
+}
+
+.navy {
+  --bg: var(--navy);
+  --fg: var(--white);
+  --ext: var(--ink);
+}
+.white {
+  --bg: var(--white);
+  --fg: var(--navy);
+  --ext: var(--ink);
+}
+.outline {
+  --bg: transparent;
+  --fg: currentColor;
+  --ext: currentColor;
+}
+.outline::before {
+  opacity: 0;
+}
+.outline .face {
+  box-shadow: inset 0 0 0 2px currentColor;
+}
+.outline:hover .face {
+  transform: none;
+  background: currentColor;
+}
+.outline:hover .text,
+.outline:hover .arrow {
+  color: var(--paper);
+  filter: invert(0);
+}
+[data-theme="navy"] .outline:hover .text,
+[data-theme="navy"] .outline:hover .arrow,
+[data-theme="ink"] .outline:hover .text,
+[data-theme="ink"] .outline:hover .arrow {
+  color: var(--navy);
+}
+
+.arrow {
+  width: 1.05em;
+  height: 1.05em;
+  flex: none;
+  transition: transform 0.45s var(--ease-out);
+}
+.btn:hover .arrow {
+  transform: translateX(0.22em);
+}
+:global([dir="rtl"]) .btn:hover .arrow {
+  transform: scaleX(-1) translateX(0.22em);
+}
+:global([dir="rtl"]) .arrow {
+  transform: scaleX(-1);
+}

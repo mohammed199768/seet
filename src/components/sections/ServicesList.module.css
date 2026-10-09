@@ -1,0 +1,156 @@
+.services {
+  position: relative;
+  z-index: 3;
+  background: var(--paper);
+  padding-block: clamp(88px, 12vw, 180px);
+}
+.head {
+  display: grid;
+  gap: 18px;
+  margin-block-end: clamp(40px, 6vw, 88px);
+  color: var(--navy);
+}
+.head .label {
+  color: var(--ink);
+}
+.title {
+  max-width: 16ch;
+}
+.list {
+  border-top: 2px solid var(--ink);
+}
+.list > li {
+  border-bottom: 1px solid var(--rule);
+}
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 4fr) auto;
+  align-items: center;
+  gap: clamp(16px, 3vw, 48px);
+  padding-block: clamp(22px, 2.6vw, 40px);
+  color: var(--ink);
+  transition: color 0.35s;
+}
+.row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--navy);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.55s var(--ease-out);
+}
+.row:hover,
+.row:focus-visible {
+  color: var(--white);
+}
+.row:hover::before,
+.row:focus-visible::before {
+  transform: scaleY(1);
+}
+.list {
+  isolation: isolate;
+}
+.list > li {
+  position: relative;
+}
+.name {
+  transition: transform 0.55s var(--ease-out);
+}
+.row:hover .name {
+  transform: translateX(calc(14px * var(--sign, 1)));
+}
+:global([dir="rtl"]) .row {
+  --sign: -1;
+}
+.short {
+  font-size: 1rem;
+  opacity: 0.78;
+  max-width: 42ch;
+}
+.arrow {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.5s var(--ease-out);
+}
+:global([dir="rtl"]) .arrow {
+  transform: scaleX(-1);
+}
+.row:hover .arrow {
+  transform: rotate(-45deg);
+}
+:global([dir="rtl"]) .row:hover .arrow {
+  transform: scaleX(-1) rotate(-45deg);
+}
+.thumb {
+  display: none;
+}
+.foot {
+  margin-block-start: clamp(36px, 5vw, 64px);
+}
+
+.float {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  width: clamp(200px, 17vw, 300px);
+  aspect-ratio: 4 / 5;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: -12px 12px 0 var(--ink);
+}
+.floatImg {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(100% 0 0 0);
+}
+.floatImg img {
+  object-fit: cover;
+}
+
+@media (max-width: 860px) {
+  .row {
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "thumb name arrow"
+      "thumb short arrow";
+    row-gap: 6px;
+    column-gap: 16px;
+    padding-block: 18px;
+  }
+  .thumb {
+    grid-area: thumb;
+    display: block;
+    position: relative;
+    width: 64px;
+    aspect-ratio: 4 / 5;
+    border-radius: 10px;
+    overflow: hidden;
+    align-self: center;
+  }
+  .thumb img {
+    object-fit: cover;
+  }
+  .name {
+    grid-area: name;
+    font-size: 1.25rem;
+  }
+  .short {
+    grid-area: short;
+    font-size: 0.9375rem;
+  }
+  .arrow {
+    grid-area: arrow;
+    width: 24px;
+    height: 24px;
+  }
+  .float {
+    display: none;
+  }
+}

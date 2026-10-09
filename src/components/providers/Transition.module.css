@@ -1,0 +1,26 @@
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: var(--navy);
+  visibility: hidden;
+  clip-path: inset(100% 0 0 0);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.dots {
+  display: flex;
+  gap: clamp(10px, 1.4vw, 18px);
+}
+.dots i {
+  display: block;
+  width: clamp(22px, 3vw, 40px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--white);
+}
+.dots i:last-child {
+  width: clamp(16px, 2.2vw, 30px);
+  align-self: flex-end;
+}

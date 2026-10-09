@@ -1,0 +1,139 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  background: var(--navy);
+  color: var(--white);
+  overflow: hidden;
+  isolation: isolate;
+}
+/* dots + bars texture from the brand pattern, very quiet */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='72'%3E%3Ccircle cx='16' cy='24' r='10' fill='%23fff'/%3E%3Crect x='36' y='17' width='78' height='14' rx='7' fill='%23fff'/%3E%3Crect x='4' y='52' width='52' height='14' rx='7' fill='%23fff'/%3E%3Ccircle cx='76' cy='59' r='10' fill='%23fff'/%3E%3C/svg%3E");
+  background-size: 132px 72px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 70%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 70%);
+}
+.inner {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: clamp(20px, 3.4vh, 48px);
+  padding-block: calc(117px + clamp(24px, 4vh, 64px)) clamp(24px, 4.5vh, 52px);
+}
+.titleWrap {
+  will-change: transform, opacity;
+}
+.title {
+  font-size: min(13.5vw, 19.5svh);
+  --s: 0.007em;
+}
+.hero[data-lang="en"] .title {
+  font-size: min(9.6vw, 14.5svh);
+}
+.title :global(.lm) {
+  padding-block-end: 0.2em;
+  margin-block-end: -0.2em;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, min(31vw, 48svh));
+  align-items: end;
+  gap: clamp(24px, 4vw, 72px);
+}
+.copy {
+  display: grid;
+  gap: clamp(20px, 2.6vh, 32px);
+  max-width: 40rem;
+}
+.sub {
+  color: var(--white);
+  max-width: 30ch;
+}
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+}
+.def {
+  font-size: var(--fs-small);
+  color: var(--lilac);
+  max-width: 36ch;
+  padding-block-start: 14px;
+  border-top: 1px solid var(--rule-inv);
+}
+.def b {
+  color: var(--white);
+  font-weight: 700;
+}
+.def i {
+  font-style: normal;
+  opacity: 0.8;
+}
+
+.slot {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  /* resting state of the film block keeps the logo's extrusion */
+  box-shadow: -10px 10px 0 var(--ink);
+}
+.slotMedia {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  background: var(--ink);
+}
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.reel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 2;
+  visibility: hidden;
+  background: var(--ink);
+  pointer-events: none;
+}
+
+@media (min-width: 961px) {
+  .slotMedia {
+    display: none;
+  }
+}
+@media (max-width: 960px) {
+  .inner {
+    justify-content: flex-start;
+    padding-block-start: calc(117px + 56px);
+  }
+  .title {
+    font-size: min(19vw, 20svh);
+  }
+  .hero[data-lang="en"] .title {
+    font-size: 13.2vw;
+  }
+  .row {
+    grid-template-columns: 1fr;
+  }
+  .slot {
+    margin-inline-start: 10px;
+  }
+  .reel {
+    display: none;
+  }
+}

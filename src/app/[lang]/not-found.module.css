@@ -1,0 +1,22 @@
+.nf {
+  background: var(--navy);
+  color: var(--white);
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+}
+.inner {
+  display: grid;
+  gap: 24px;
+  justify-items: start;
+  padding-block: calc(117px + 60px) 80px;
+}
+.code {
+  --ext: var(--ink);
+  font-size: clamp(6rem, 2rem + 18vw, 20rem);
+  line-height: 0.9;
+  direction: ltr;
+}
+.inner .lead {
+  color: var(--lilac);
+}

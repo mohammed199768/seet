@@ -1,0 +1,98 @@
+.process {
+  position: relative;
+  z-index: 3;
+  background: var(--navy);
+  color: var(--white);
+  overflow: hidden;
+}
+.inner {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(48px, 8vh, 96px);
+  padding-block: clamp(88px, 10vw, 140px);
+}
+.head {
+  display: grid;
+  gap: 18px;
+}
+.head .label {
+  color: var(--lilac);
+}
+.title {
+  max-width: 18ch;
+}
+.track {
+  position: relative;
+}
+.rail {
+  position: absolute;
+  top: 0;
+  inset-inline: 0;
+  height: 10px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.12);
+  overflow: hidden;
+}
+.fill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--white);
+  transform-origin: var(--o, left);
+}
+:global([dir="rtl"]) .fill {
+  --o: right;
+}
+.steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(20px, 2.4vw, 40px);
+  padding-block-start: 44px;
+  counter-reset: step;
+}
+.step {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+.num {
+  --ext: var(--ink);
+  --s: 0.012em;
+  font-size: clamp(3.5rem, 2rem + 4vw, 7rem);
+  line-height: 1;
+  direction: ltr;
+  justify-self: start;
+}
+.stepTitle {
+  margin-block-start: 6px;
+}
+.text {
+  color: var(--lilac);
+  max-width: 26ch;
+}
+@media (max-width: 960px) {
+  .rail {
+    display: none;
+  }
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 0;
+  }
+  .step {
+    grid-template-columns: auto 1fr;
+    column-gap: 20px;
+    padding-block: 28px;
+    border-top: 1px solid var(--rule-inv);
+  }
+  .num {
+    grid-row: span 2;
+    font-size: 3.25rem;
+  }
+  .stepTitle {
+    margin: 0;
+    align-self: end;
+  }
+}

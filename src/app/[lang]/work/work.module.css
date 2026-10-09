@@ -1,0 +1,4 @@
+.index {
+  background: var(--white);
+  padding-block: 0 clamp(120px, 16vw, 240px);
+}

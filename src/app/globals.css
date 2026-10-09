@@ -1,26 +1,314 @@
-@import "tailwindcss";
-
+/* ───────────────────────── SEET tokens ───────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --navy: #2b2a68;
+  --navy-deep: #1e1d4e;
+  --ink: #100f0d;
+  --paper: #f2f2f5;
+  --white: #ffffff;
+  --lilac: #b9b6f2; /* muted text on navy only */
+  --rule: rgb(16 15 13 / 0.14);
+  --rule-inv: rgb(255 255 255 / 0.18);
+
+  --gutter: clamp(16px, 4vw, 64px);
+  --max: 1680px;
+  --radius: clamp(18px, 2vw, 32px);
+  --radius-sm: 14px;
+
+  --fs-body: clamp(1rem, 0.94rem + 0.25vw, 1.1875rem);
+  --fs-small: 0.875rem;
+  --fs-label: 0.8125rem;
+  --fs-lead: clamp(1.25rem, 1rem + 1vw, 1.875rem);
+  --fs-h3: clamp(1.5rem, 1.1rem + 1.5vw, 2.5rem);
+  --fs-h2: clamp(2.25rem, 1.2rem + 4.4vw, 6.5rem);
+  --fs-h1: clamp(3rem, 1rem + 8vw, 11rem);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --header-h: 76px;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ───────────────────────── reset ───────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  min-height: 100svh;
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+:lang(ar) body,
+html[lang="ar"] body {
+  line-height: 1.75;
+}
+img,
+video,
+svg,
+picture {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+h1,
+h2,
+h3,
+h4 {
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
+}
+::selection {
+  background: var(--navy);
+  color: var(--white);
+}
+:focus-visible {
+  outline: 3px solid var(--navy);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+[data-theme="navy"] :focus-visible,
+[data-theme="ink"] :focus-visible {
+  outline-color: var(--white);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ───────────────────────── layout ───────────────────────── */
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.skip {
+  position: fixed;
+  inset-inline-start: 12px;
+  top: -100px;
+  z-index: 1000;
+  background: var(--ink);
+  color: var(--white);
+  padding: 12px 18px;
+  border-radius: 999px;
+}
+.skip:focus {
+  top: 12px;
+}
+
+/* ───────────────────────── type ───────────────────────── */
+.display {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+:lang(ar) .display {
+  letter-spacing: 0;
+  line-height: 1.12;
+}
+.h2 {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  font-weight: 900;
+  font-size: var(--fs-h2);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+:lang(ar) .h2 {
+  letter-spacing: 0;
+  line-height: 1.22;
+}
+.h3 {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  font-weight: 700;
+  font-size: var(--fs-h3);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+:lang(ar) .h3 {
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+.lead {
+  font-size: var(--fs-lead);
+  line-height: 1.4;
+  font-weight: 500;
+}
+:lang(ar) .lead {
+  line-height: 1.7;
+}
+.label {
+  font-family: var(--font-label), var(--font-sans), sans-serif;
+  font-weight: 500;
+  font-size: var(--fs-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+:lang(ar) .label {
+  letter-spacing: 0;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+.muted {
+  opacity: 0.68;
+}
+
+/* ───────────────────────── the extrusion ─────────────────────────
+   Lifted from the logo: a solid block falling down-left.
+   --k (0→1) scales the depth so it can be animated. */
+@property --k {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+.extrude {
+  --ext: var(--ink);
+  --s: 0.0085em;
+  text-shadow:
+    calc(var(--s) * -1 * var(--k)) calc(var(--s) * 1 * var(--k)) 0 var(--ext),
+    calc(var(--s) * -2 * var(--k)) calc(var(--s) * 2 * var(--k)) 0 var(--ext),
+    calc(var(--s) * -3 * var(--k)) calc(var(--s) * 3 * var(--k)) 0 var(--ext),
+    calc(var(--s) * -4 * var(--k)) calc(var(--s) * 4 * var(--k)) 0 var(--ext),
+    calc(var(--s) * -5 * var(--k)) calc(var(--s) * 5 * var(--k)) 0 var(--ext),
+    calc(var(--s) * -6 * var(--k)) calc(var(--s) * 6 * var(--k)) 0 var(--ext),
+    calc(var(--s) * -7 * var(--k)) calc(var(--s) * 7 * var(--k)) 0 var(--ext),
+    calc(var(--s) * -8 * var(--k)) calc(var(--s) * 8 * var(--k)) 0 var(--ext),
+    calc(var(--s) * -9 * var(--k)) calc(var(--s) * 9 * var(--k)) 0 var(--ext),
+    calc(var(--s) * -10 * var(--k)) calc(var(--s) * 10 * var(--k)) 0 var(--ext);
+}
+/* Logo construction: white face, navy outline, navy block. */
+.extrude-logo {
+  --ext: var(--navy);
+  color: var(--white);
+  -webkit-text-stroke: 0.045em var(--navy);
+  paint-order: stroke fill;
+}
+
+/* Line masks for headline reveals (room left for the extrusion). */
+.lm {
+  display: block;
+  overflow: clip;
+  padding-block-end: 0.16em;
+  margin-block-end: -0.16em;
+  padding-inline: 0.14em;
+  margin-inline: -0.14em;
+}
+.lm > span {
+  display: block;
+  will-change: transform;
+}
+
+/* ───────────────────────── media frames ───────────────────────── */
+.frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--paper);
+}
+.frame > img,
+.frame > video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.r45 {
+  aspect-ratio: 4 / 5;
+}
+
+/* ───────────────────────── preloader gating ───────────────────────── */
+html.is-loading {
+  overflow: hidden;
+}
+html.no-preload [data-preloader] {
+  display: none;
+}
+
+/* ───────────────────────── lenis ───────────────────────── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ───────────────────────── cursor ───────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor,
+  html.has-cursor * {
+    cursor: none !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ───────────────────────── motion safety ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
