@@ -1,6 +1,6 @@
 # SEET / صيت — website
 
-Bilingual (Arabic RTL by default, English LTR) agency site for SEET Marketing Agency.
+Bilingual (English LTR by default, Arabic RTL at /ar) agency site for SEET Marketing Agency.
 Next.js 16 (App Router) · TypeScript · GSAP 3.15 (ScrollTrigger, SplitText, Flip, MotionPath, DrawSVG) · Lenis · CSS Modules.
 
 The design rationale, asset list and motion plan are in [`PLAN.md`](PLAN.md).

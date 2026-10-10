@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
     applicationName: "SEET",
     alternates: {
       canonical: `/${lang}`,
-      languages: { ar: "/ar", en: "/en", "x-default": "/ar" },
+      languages: { ar: "/ar", en: "/en", "x-default": "/en" },
     },
     openGraph: {
       type: "website",
