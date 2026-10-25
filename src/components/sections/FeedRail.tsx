@@ -90,7 +90,12 @@ export function FeedRail({
           <Lines as="h2" lines={[title]} className={`${styles.title} h2`} />
           <p className={`${styles.meta} label`}>{meta}</p>
           <div className={styles.film}>
-            <LazyVideo mp4="/media/clip-feed.mp4" webm="/media/clip-feed.webm" poster="/media/clip-feed-poster.webp" className={styles.filmVideo} />
+            <LazyVideo
+              mp4="/media/clip-feed-99231c9b.mp4"
+              webm="/media/clip-feed-549ed3ef.webm"
+              poster="/media/clip-feed-poster-ee01590e.webp"
+              className={styles.filmVideo}
+            />
           </div>
           <span id="feed-title" className="sr-only">
             {title}
