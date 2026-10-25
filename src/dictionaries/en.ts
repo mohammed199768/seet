@@ -10,6 +10,7 @@ const en: Dictionary = {
     home: "Home",
     work: "Work",
     services: "Services",
+    packages: "Packages",
     about: "About",
     contact: "Contact",
     cta: "Start a project",
@@ -102,6 +103,21 @@ const en: Dictionary = {
   servicesPage: {
     title: "Services",
     intro: "Eight services that work together. Start with one, or hand us the whole account.",
+  },
+  packagesSection: {
+    eyebrow: "SEET Packages",
+    title: "Social Media Management Packages",
+    intro: "Clear packages for content, design and publishing, matched to the stage and ambition of your brand.",
+    recommended: "Most popular",
+    choose: "Choose",
+    details: "See package details",
+  },
+  packagesPage: {
+    title: "Packages",
+    intro: "Three flexible packages designed to give your brand consistent content, a clearer presence and a plan that can grow.",
+    benefitsTitle: "Why work with SEET",
+    termsTitle: "Terms & conditions",
+    promise: "We do more than make content. We build a place for your name.",
   },
   aboutPage: {
     title: "About",

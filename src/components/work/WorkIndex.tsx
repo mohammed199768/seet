@@ -93,10 +93,10 @@ export function WorkIndex({ cards, filters }: { cards: WorkCard[]; filters: { ke
                 onPointerLeave={(e) => stop(e.currentTarget)}
               >
                 <span className={styles.media}>
-                  <Image src={c.cover} alt="" fill sizes="(min-width: 1100px) 30vw, (min-width: 640px) 45vw, 92vw" quality={80} />
+                  <Image src={c.cover} alt="" fill sizes="(min-width: 1100px) 30vw, (min-width: 640px) 45vw, 92vw" quality={80} loading="lazy" />
                   {c.flick.map((src) => (
                     <span key={src} className={styles.flick} data-flick>
-                      <Image src={src} alt="" fill sizes="(min-width: 1100px) 30vw, (min-width: 640px) 45vw, 92vw" quality={80} />
+                      <Image src={src} alt="" fill sizes="(min-width: 1100px) 30vw, (min-width: 640px) 45vw, 92vw" quality={80} loading="lazy" />
                     </span>
                   ))}
                 </span>

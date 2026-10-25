@@ -44,7 +44,7 @@ export function NextCase({ label, name, href, image }: { label: string; name: st
         <span className={`${styles.name} display`}>{name}</span>
       </TLink>
       <span ref={pic} className={styles.pic} aria-hidden="true">
-        <Image src={image} alt="" fill sizes="280px" quality={80} />
+        <Image src={image} alt="" fill sizes="280px" quality={80} loading="lazy" />
       </span>
     </section>
   );

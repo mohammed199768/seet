@@ -12,7 +12,7 @@ import type { Dictionary } from "@/dictionaries/ar";
 import { site } from "@/content/site";
 import styles from "./Header.module.css";
 
-const links = ["work", "services", "about", "contact"] as const;
+const links = ["work", "services", "packages", "about", "contact"] as const;
 
 export function Header({ lang, t }: { lang: Locale; t: Dictionary["nav"] & { location: string } }) {
   const pathname = usePathname();

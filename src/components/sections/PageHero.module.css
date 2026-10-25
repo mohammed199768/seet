@@ -9,6 +9,7 @@
   padding-block: calc(117px + clamp(56px, 9vw, 140px)) clamp(48px, 7vw, 104px);
 }
 .title {
+  min-width: 0;
   --ext: var(--ink);
   --s: 0.007em;
   font-size: clamp(3.5rem, 1rem + 13vw, 15rem);
@@ -30,4 +31,9 @@
 }
 .aside {
   color: var(--ink);
+}
+@media (max-width: 480px) {
+  .title {
+    font-size: 13vw;
+  }
 }

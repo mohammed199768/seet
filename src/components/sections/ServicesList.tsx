@@ -34,17 +34,23 @@ export function ServicesList({
       gsap.set(f, { xPercent: -50, yPercent: -58, scale: 0.85 });
       const xTo = gsap.quickTo(f, "x", { duration: 0.6, ease: "power3" });
       const yTo = gsap.quickTo(f, "y", { duration: 0.6, ease: "power3" });
-      const rTo = gsap.quickTo(f, "rotate", { duration: 0.8, ease: "power3" });
+      const rTo = gsap.quickTo(f, "rotation", { duration: 0.8, ease: "power3" });
       let lastX = 0;
       const list = root.current!.querySelector<HTMLElement>("[data-list]")!;
       const imgs = f.querySelectorAll<HTMLElement>("[data-i]");
       let current = -1;
 
       const move = contextSafe((e: PointerEvent) => {
+        const row = (e.target as HTMLElement | null)?.closest<HTMLElement>("[data-row]");
+        if (!row || !list.contains(row)) {
+          hide();
+          return;
+        }
         xTo(e.clientX);
         yTo(e.clientY);
         rTo(gsap.utils.clamp(-10, 10, (e.clientX - lastX) * 0.6));
         lastX = e.clientX;
+        show(Number(row.dataset.row));
       });
       const show = contextSafe((i: number) => {
         if (i === current) return;
@@ -58,17 +64,18 @@ export function ServicesList({
         current = -1;
         gsap.to(f, { autoAlpha: 0, scale: 0.85, duration: 0.4 });
       });
-      const enter = (e: Event) => {
-        const row = (e.target as HTMLElement).closest<HTMLElement>("[data-row]");
-        if (row) show(Number(row.dataset.row));
+      const leaveWindow = (e: PointerEvent) => {
+        if (!e.relatedTarget) hide();
       };
-      list.addEventListener("pointermove", move);
-      list.addEventListener("pointerover", enter);
+      document.addEventListener("pointermove", move, { passive: true });
       list.addEventListener("pointerleave", hide);
+      window.addEventListener("blur", hide);
+      document.addEventListener("pointerout", leaveWindow);
       return () => {
-        list.removeEventListener("pointermove", move);
-        list.removeEventListener("pointerover", enter);
+        document.removeEventListener("pointermove", move);
         list.removeEventListener("pointerleave", hide);
+        window.removeEventListener("blur", hide);
+        document.removeEventListener("pointerout", leaveWindow);
       };
     },
     { scope: root },
@@ -86,7 +93,7 @@ export function ServicesList({
             <li key={r.slug} data-r data-row={String(i)}>
               <TLink href={r.href} className={styles.row}>
                 <span className={styles.thumb} aria-hidden="true">
-                  <Image src={r.image} alt="" fill sizes="72px" quality={70} />
+                  <Image src={r.image} alt="" fill sizes="72px" quality={70} loading="lazy" />
                 </span>
                 <span className={`${styles.name} h3`}>{r.title}</span>
                 <span className={styles.short}>{r.short}</span>
@@ -105,7 +112,7 @@ export function ServicesList({
       <div ref={float} className={styles.float} aria-hidden="true">
         {rows.map((r, i) => (
           <div key={r.slug} className={styles.floatImg} data-i={i}>
-            <Image src={r.image} alt="" fill sizes="300px" quality={80} />
+            <Image src={r.image} alt="" fill sizes="300px" quality={80} loading="lazy" />
           </div>
         ))}
       </div>

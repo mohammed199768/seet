@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/services">
   return {
     title: t.servicesPage.title,
     description: t.servicesPage.intro,
-    alternates: { canonical: `/${lang}/services`, languages: { ar: "/ar/services", en: "/en/services" } },
+    alternates: { canonical: `/${lang}/services`, languages: { ar: "/ar/services", en: "/en/services", "x-default": "/en/services" } },
   };
 }
 
@@ -59,7 +59,7 @@ export default async function ServicesPage({ params }: PageProps<"/[lang]/servic
           <section key={s.slug} id={s.slug} className={styles.svc} data-flip={i % 2 ? "1" : ""} aria-labelledby={`${s.slug}-t`}>
             <div className={`wrap ${styles.grid}`}>
               <ClipReveal className={styles.media}>
-                <Image src={s.image} alt="" fill sizes="(min-width: 900px) 40vw, 92vw" quality={85} />
+                <Image src={s.image} alt="" fill sizes="(min-width: 900px) 40vw, 92vw" quality={85} loading="lazy" />
               </ClipReveal>
               <div className={styles.copy}>
                 <Lines as="h2" lines={[s.title[lang]]} className={`${styles.title} h2`} />

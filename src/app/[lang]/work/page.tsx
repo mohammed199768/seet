@@ -6,6 +6,8 @@ import { PageHero } from "@/components/sections/PageHero";
 import { WorkIndex } from "@/components/work/WorkIndex";
 import { FeedWall } from "@/components/work/FeedWall";
 import { Cta } from "@/components/sections/Cta";
+import { jsonLd } from "@/lib/jsonld";
+import { site } from "@/content/site";
 import styles from "./work.module.css";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/work">): Promise<Metadata> {
@@ -14,7 +16,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/work">): P
   return {
     title: t.workPage.title,
     description: t.workPage.intro,
-    alternates: { canonical: `/${lang}/work`, languages: { ar: "/ar/work", en: "/en/work" } },
+    alternates: { canonical: `/${lang}/work`, languages: { ar: "/ar/work", en: "/en/work", "x-default": "/en/work" } },
   };
 }
 
@@ -44,6 +46,18 @@ export default async function WorkPage({ params }: PageProps<"/[lang]/work">) {
     ...keys.map((k) => ({ key: k, label: sectors[k][lang], n: clients.filter((c) => c.sector === k).length })),
   ];
 
+  const ld = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: lang === "ar" ? "أعمال صيت" : "SEET selected work",
+    itemListElement: clients.map((client, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: client.name[lang],
+      url: `${site.url}/${lang}/work/${client.slug}`,
+    })),
+  };
+
   // An even spread of posts from every brand for the wall.
   const wall: string[] = [];
   for (let round = 0; wall.length < 60 && round < 12; round++) {
@@ -56,6 +70,7 @@ export default async function WorkPage({ params }: PageProps<"/[lang]/work">) {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ld) }} />
       <PageHero
         title={t.workPage.title}
         intro={t.workPage.intro}

@@ -87,7 +87,7 @@ export function CaseFeed({ posts, name, t, rtl }: { posts: string[]; name: strin
                 setOpen(i);
               }}
             >
-              <Image src={src} alt="" fill sizes="(min-width: 1000px) 320px, 33vw" quality={85} />
+              <Image src={src} alt="" fill sizes="(min-width: 1000px) 320px, 33vw" quality={85} loading="lazy" />
             </button>
           </li>
         ))}

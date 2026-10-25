@@ -102,9 +102,9 @@ export function FeedRail({
           <article key={c.slug} className={styles.card} data-card onPointerEnter={(e) => shuffle(e.currentTarget.querySelector("[data-grid]"))}>
             <TLink href={c.href} className={styles.cardLink} data-cursor="view">
               <div className={styles.grid} data-grid>
-                {c.posts.slice(0, 9).map((src, i) => (
+                {c.posts.slice(0, 9).map((src) => (
                   <span key={src} className={styles.tile}>
-                    <Image src={src} alt="" fill sizes="(min-width: 961px) 9vw, 26vw" quality={80} loading={i < 3 ? "eager" : "lazy"} />
+                    <Image src={src} alt="" fill sizes="(min-width: 961px) 9vw, 26vw" quality={80} loading="lazy" />
                   </span>
                 ))}
               </div>

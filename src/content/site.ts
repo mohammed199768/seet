@@ -18,4 +18,5 @@ export const site = {
     gaId: process.env.NEXT_PUBLIC_GA_ID ?? "",
     metaPixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID ?? "",
   },
+  googleSiteVerification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ?? "",
 };

@@ -44,7 +44,7 @@ export function FeedWall({ title, posts }: { title: string; posts: string[] }) {
           <div key={c} className={styles.col} data-col>
             {col.map((src) => (
               <span key={src} className={styles.tile}>
-                <Image src={src} alt="" fill sizes="(min-width: 900px) 19vw, 33vw" quality={70} />
+                <Image src={src} alt="" fill sizes="(min-width: 900px) 19vw, 33vw" quality={70} loading="lazy" />
               </span>
             ))}
           </div>

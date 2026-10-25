@@ -19,6 +19,7 @@ npm run build && npm start
 |---|---|
 | Phone, email, WhatsApp, social links, analytics IDs | `src/content/site.ts` (empty fields stay hidden on the site) |
 | Services (order, copy, scope, image) | `src/content/services.ts` |
+| Social media packages, benefits and terms | `src/content/packages.ts` |
 | Clients / case studies (name, sector, summary, cover, post count) | `src/content/clients.ts` |
 | All interface copy, both languages | `src/dictionaries/ar.ts`, `src/dictionaries/en.ts` |
 | Brand tokens (colours, type scale, extrusion) | `src/app/globals.css` |
@@ -33,21 +34,11 @@ To add a client:
 
 Pages, the sitemap and static params all follow from that entry.
 
+To rebuild the optimized work library from the supplied source folder, run `npm run images:work`. The script keeps Tablia untouched, excludes contact sheets and empty slices, and exports numbered 1080px WebP files.
+
 ## Contact form
 
-`POST /api/contact` validates with zod. Spam protection is a honeypot field plus a 2.5 s time trap. Configure delivery with environment variables:
-
-```
-CONTACT_WEBHOOK_URL=   # receives the JSON payload (Make, Zapier, CRM…)
-# or
-RESEND_API_KEY=
-CONTACT_TO_EMAIL=
-CONTACT_FROM_EMAIL=    # optional, must be a verified Resend sender
-```
-
-How it behaves without either:
-- In development, requests are logged.
-- In production, the API answers 503 and the form shows its error message, so no request is silently lost.
+The form validates in the browser and submits directly to the configured Formspree form (`xzedyqwk`). Its native `action` also provides a non-JavaScript fallback.
 
 ## Other environment variables
 
@@ -55,6 +46,7 @@ How it behaves without either:
 NEXT_PUBLIC_SITE_URL=https://your-domain   # canonical URLs, sitemap, OG
 NEXT_PUBLIC_GA_ID=                         # GA4, loads only when set
 NEXT_PUBLIC_META_PIXEL_ID=                 # Meta Pixel, loads only when set
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=      # Google Search Console HTML-tag token
 ```
 
 ## Motion and accessibility

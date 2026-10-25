@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/contact">)
   return {
     title: t.nav.contact,
     description: t.contactPage.intro,
-    alternates: { canonical: `/${lang}/contact`, languages: { ar: "/ar/contact", en: "/en/contact" } },
+    alternates: { canonical: `/${lang}/contact`, languages: { ar: "/ar/contact", en: "/en/contact", "x-default": "/en/contact" } },
   };
 }
 

@@ -8,6 +8,7 @@ const ar = {
     home: "الرئيسية",
     work: "الأعمال",
     services: "الخدمات",
+    packages: "Packages",
     about: "من نحن",
     contact: "تواصل",
     cta: "ابدأ مشروعك",
@@ -100,6 +101,21 @@ const ar = {
   servicesPage: {
     title: "الخدمات",
     intro: "ثماني خدمات تشتغل مع بعض. تقدر تبدأ بوحدة، أو تسلّمنا الحساب كامل.",
+  },
+  packagesSection: {
+    eyebrow: "SEET Packages",
+    title: "Social Media Management Packages",
+    intro: "باقات واضحة لإدارة المحتوى والتصميم والنشر، تختار منها المستوى المناسب لمرحلة علامتك.",
+    recommended: "الأكثر ترشيحًا",
+    choose: "اختر",
+    details: "شاهد تفاصيل الباقات",
+  },
+  packagesPage: {
+    title: "Packages",
+    intro: "ثلاث باقات مرنة تمنح علامتك محتوى ثابتًا، حضورًا أوضح، وخطة يمكن قياسها وتطويرها.",
+    benefitsTitle: "مميزات التعامل مع SEET",
+    termsTitle: "الشروط والأحكام",
+    promise: "إحنا مش بنعمل مجرد محتوى... إحنا بنصنع لصيتك مكانة.",
   },
   aboutPage: {
     title: "من نحن",

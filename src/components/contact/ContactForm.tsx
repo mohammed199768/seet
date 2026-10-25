@@ -10,10 +10,12 @@ import { Button } from "@/components/ui/Button";
 import styles from "./ContactForm.module.css";
 
 type Status = "idle" | "sending" | "sent" | "error";
+const formspreeEndpoint = "https://formspree.io/f/xzedyqwk";
 
 export function ContactForm({ lang, t, services }: { lang: Locale; t: Dictionary["form"]; services: { slug: string; title: string }[] }) {
   const params = useSearchParams();
   const preset = params.get("service") ?? "";
+  const packagePreset = params.get("package") ?? "";
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Partial<Record<ErrorKey, boolean>>>({});
   const started = useRef(0);
@@ -32,6 +34,7 @@ export function ContactForm({ lang, t, services }: { lang: Locale; t: Dictionary
       company: String(fd.get("company") ?? ""),
       contact: String(fd.get("contact") ?? ""),
       service: String(fd.get("service") ?? ""),
+      package: String(fd.get("package") ?? ""),
       message: String(fd.get("message") ?? ""),
       consent: fd.get("consent") === "on",
       website: String(fd.get("website") ?? ""),
@@ -64,10 +67,20 @@ export function ContactForm({ lang, t, services }: { lang: Locale; t: Dictionary
     }
     setStatus("sending");
     try {
-      const r = await fetch("/api/contact", {
+      const r = await fetch(formspreeEndpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: { Accept: "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          company: data.company,
+          contact: data.contact,
+          service: data.service,
+          package: data.package,
+          message: data.message,
+          language: data.lang,
+          consent: data.consent ? "yes" : "no",
+          _subject: `New SEET project request — ${data.name}`,
+        }),
       });
       if (!r.ok) throw new Error(String(r.status));
       setStatus("sent");
@@ -119,7 +132,8 @@ export function ContactForm({ lang, t, services }: { lang: Locale; t: Dictionary
     ) : null;
 
   return (
-    <form ref={form} className={styles.form} onSubmit={submit} noValidate>
+    <form ref={form} className={styles.form} action={formspreeEndpoint} method="POST" onSubmit={submit} noValidate>
+      <input type="hidden" name="package" value={packagePreset} />
       <div className={styles.row}>
         <label className={styles.field}>
           <span className={styles.lbl}>{t.name}</span>
@@ -183,7 +197,7 @@ export function ContactForm({ lang, t, services }: { lang: Locale; t: Dictionary
       </div>
 
       <label className={styles.check}>
-        <input type="checkbox" name="consent" aria-invalid={!!errors.consent} aria-describedby={errors.consent ? "consent-err" : undefined} />
+        <input type="checkbox" name="consent" required aria-invalid={!!errors.consent} aria-describedby={errors.consent ? "consent-err" : undefined} />
         <span className={styles.box} aria-hidden="true" />
         <span>{t.consent}</span>
       </label>

@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/work/[clie
   return {
     title: c.name[lang],
     description: c.summary[lang],
-    alternates: { canonical: `/${lang}/work/${c.slug}`, languages: { ar: `/ar/work/${c.slug}`, en: `/en/work/${c.slug}` } },
-    openGraph: { images: [{ url: postSrc(c.slug, c.cover), width: 500, height: 625 }] },
+    alternates: { canonical: `/${lang}/work/${c.slug}`, languages: { ar: `/ar/work/${c.slug}`, en: `/en/work/${c.slug}`, "x-default": `/en/work/${c.slug}` } },
+    openGraph: { images: [{ url: postSrc(c.slug, c.cover), width: 1080, height: 1350, alt: c.name[lang] }] },
   };
 }
 
@@ -104,7 +104,7 @@ export default async function CasePage({ params }: PageProps<"/[lang]/work/[clie
           </ClipReveal>
           {others.slice(0, 2).map((p, i) => (
             <ClipReveal key={p} className={`${styles.shot} ${i ? styles.shotC : styles.shotB}`}>
-              <Image src={p} alt="" fill sizes="(min-width: 900px) 26vw, 45vw" quality={85} />
+              <Image src={p} alt="" fill sizes="(min-width: 900px) 26vw, 45vw" quality={85} loading="lazy" />
             </ClipReveal>
           ))}
         </div>

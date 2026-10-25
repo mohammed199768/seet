@@ -7,6 +7,7 @@ import { Ticker } from "@/components/sections/Ticker";
 import { Statement } from "@/components/sections/Statement";
 import { FeedRail } from "@/components/sections/FeedRail";
 import { ServicesList } from "@/components/sections/ServicesList";
+import { Packages } from "@/components/sections/Packages";
 import { Process } from "@/components/sections/Process";
 import { Studio } from "@/components/sections/Studio";
 import { Cta } from "@/components/sections/Cta";
@@ -39,7 +40,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         text={t.statement.text}
         link={t.statement.link}
         linkHref={href(lang, "/about")}
-        images={[postSrc("smart-food", 3), postSrc("tablia", 5), postSrc("mona-clinic", 14)]}
+        images={[postSrc("healthy", 3), postSrc("tablia", 5), postSrc("mona-clinic", 14)]}
       />
       <FeedRail
         eyebrow={t.feed.eyebrow}
@@ -63,6 +64,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
           image: s.image,
         }))}
       />
+      <Packages lang={lang} t={t.packagesSection} preview />
       <Process eyebrow={t.process.eyebrow} title={t.process.title} steps={t.process.steps} />
       <Studio
         eyebrow={t.studio.eyebrow}

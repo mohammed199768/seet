@@ -44,6 +44,8 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
       description: t.meta.description,
     },
     twitter: { card: "summary_large_image" },
+    robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
+    ...(site.googleSiteVerification ? { verification: { google: site.googleSiteVerification } } : {}),
     formatDetection: { telephone: false },
   };
 }
@@ -54,16 +56,30 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
 
   const orgLd = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "SEET Marketing Agency",
-    alternateName: "صيت",
-    url: site.url,
-    logo: `${site.url}/brand/logo-primary.png`,
-    slogan: "Make the brand visible.",
-    address: { "@type": "PostalAddress", addressLocality: "Beni Suef", addressCountry: "EG" },
-    ...(site.email ? { email: site.email } : {}),
-    ...(site.phone ? { telephone: site.phone } : {}),
-    ...(site.social.length ? { sameAs: site.social.map((s) => s.href) } : {}),
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${site.url}/#organization`,
+        name: "SEET Marketing Agency",
+        alternateName: "صيت",
+        url: site.url,
+        logo: `${site.url}/brand/logo-primary.png`,
+        slogan: "Make the brand visible.",
+        address: { "@type": "PostalAddress", addressLocality: "Beni Suef", addressCountry: "EG" },
+        ...(site.email ? { email: site.email } : {}),
+        ...(site.phone ? { telephone: site.phone } : {}),
+        ...(site.social.length ? { sameAs: site.social.map((s) => s.href) } : {}),
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${site.url}/#website`,
+        name: "SEET Marketing Agency",
+        alternateName: "صيت",
+        url: site.url,
+        inLanguage: ["ar", "en"],
+        publisher: { "@id": `${site.url}/#organization` },
+      },
+    ],
   };
 
   return (

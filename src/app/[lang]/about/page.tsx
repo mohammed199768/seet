@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/about">): 
   return {
     title: t.aboutPage.title,
     description: t.aboutPage.lead,
-    alternates: { canonical: `/${lang}/about`, languages: { ar: "/ar/about", en: "/en/about" } },
+    alternates: { canonical: `/${lang}/about`, languages: { ar: "/ar/about", en: "/en/about", "x-default": "/en/about" } },
   };
 }
 
@@ -35,7 +35,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
       </section>
 
       <ClipReveal className={styles.wide} data-cursor="view">
-        <Image src="/media/about-desk.webp" alt="" fill sizes="100vw" quality={80} />
+        <Image src="/media/about-desk.webp" alt="" fill sizes="100vw" quality={80} loading="lazy" />
       </ClipReveal>
 
       <section className={styles.story}>
