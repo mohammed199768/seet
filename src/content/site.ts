@@ -7,13 +7,16 @@ export const site = {
   name: { ar: "صيت", en: "SEET" },
   legalNameNote: "Marketing name only — do not mix with SAYT / Media Creative legal wording.",
   phone: "", // e.g. "+20 100 000 0000"
-  whatsapp: "", // digits only, e.g. "201000000000"
+  whatsapp: "201043437978",
+  whatsappDisplay: "+20 10 4343 7978",
   email: "", // e.g. "hello@seet.agency"
   location: {
     ar: "بني سويف، مصر",
     en: "Beni Suef, Egypt",
   },
-  social: [] as { label: string; href: string }[],
+  social: [
+    { label: "Instagram", href: "https://www.instagram.com/seetagency123/" },
+  ] as { label: string; href: string }[],
   analytics: {
     gaId: process.env.NEXT_PUBLIC_GA_ID ?? "",
     metaPixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID ?? "",

@@ -5,6 +5,7 @@ import { services } from "@/content/services";
 import { site } from "@/content/site";
 import { Lines, Reveal } from "@/components/motion/Reveal";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { SocialDock } from "@/components/contact/SocialDock";
 import styles from "./contact.module.css";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/contact">): Promise<Metadata> {
@@ -59,7 +60,7 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
                     <dt>WhatsApp</dt>
                     <dd>
                       <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener noreferrer" dir="ltr">
-                        +{site.whatsapp}
+                        {site.whatsappDisplay}
                       </a>
                     </dd>
                   </div>
@@ -67,6 +68,7 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
               </dl>
             </div>
           </Reveal>
+          <SocialDock lang={lang} />
         </div>
         <Reveal intro delay={0.5} className={styles.formWrap}>
           <div data-r>

@@ -4,6 +4,7 @@ import { href, type Locale } from "@/lib/i18n";
 import type { Dictionary } from "@/dictionaries/ar";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
+import { SocialIcon } from "@/components/ui/SocialIcon";
 import { BackToTop } from "./BackToTop";
 import styles from "./Footer.module.css";
 
@@ -61,19 +62,39 @@ export function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
                 </a>
               </li>
             )}
-            {site.social.map((s) => (
-              <li key={s.href}>
-                <a className={styles.link} href={s.href} target="_blank" rel="noopener noreferrer">
-                  {s.label}
-                </a>
-              </li>
-            ))}
             <li>
               <TLink href={href(lang, "/contact")} className={styles.link}>
                 {t.nav.cta}
               </TLink>
             </li>
           </ul>
+          <div className={styles.socials} aria-label={lang === "ar" ? "روابط التواصل الاجتماعي" : "Social links"}>
+            {site.whatsapp && (
+              <a
+                className={styles.socialLink}
+                href={`https://wa.me/${site.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={lang === "ar" ? "تواصل معنا عبر واتساب" : "Contact us on WhatsApp"}
+              >
+                <SocialIcon network="whatsapp" />
+                <span>WhatsApp</span>
+              </a>
+            )}
+            {site.social.map((social) => (
+              <a
+                className={styles.socialLink}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={lang === "ar" ? "تابعنا على إنستغرام" : "Follow us on Instagram"}
+                key={social.href}
+              >
+                <SocialIcon network="instagram" />
+                <span>{social.label}</span>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 
