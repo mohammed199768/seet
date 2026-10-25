@@ -8,7 +8,13 @@ import styles from "./SocialDock.module.css";
 
 export function SocialDock({ lang }: { lang: Locale }) {
   const [footerVisible, setFooterVisible] = useState(false);
-  const instagram = site.social.find((social) => social.label === "Instagram");
+
+  const socialLabel = (network: "instagram" | "facebook") => {
+    if (network === "facebook") {
+      return lang === "ar" ? "تابعنا على فيسبوك" : "Follow us on Facebook";
+    }
+    return lang === "ar" ? "تابعنا على إنستغرام" : "Follow us on Instagram";
+  };
 
   useEffect(() => {
     const footer = document.querySelector("footer");
@@ -41,20 +47,21 @@ export function SocialDock({ lang }: { lang: Locale }) {
         <span className={styles.label}>WhatsApp</span>
       </a>
 
-      {instagram && (
+      {site.social.map((social) => (
         <a
-          className={`${styles.link} ${styles.instagram}`}
-          href={instagram.href}
+          className={`${styles.link} ${styles[social.network]}`}
+          href={social.href}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={lang === "ar" ? "تابعنا على إنستغرام" : "Follow us on Instagram"}
+          aria-label={socialLabel(social.network)}
+          key={social.href}
         >
           <span className={styles.icon}>
-            <SocialIcon network="instagram" />
+            <SocialIcon network={social.network} />
           </span>
-          <span className={styles.label}>Instagram</span>
+          <span className={styles.label}>{social.label}</span>
         </a>
-      )}
+      ))}
     </nav>
   );
 }

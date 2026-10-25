@@ -2,9 +2,20 @@ export function SocialIcon({
   network,
   className = "",
 }: {
-  network: "whatsapp" | "instagram";
+  network: "whatsapp" | "instagram" | "facebook";
   className?: string;
 }) {
+  if (network === "facebook") {
+    return (
+      <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M14.2 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.8-.1-1.6-.2-2.4-.2-2.4 0-4.1 1.5-4.1 4.2v2.3H8.3V13H11v8h3.2Z"
+          fill="currentColor"
+        />
+      </svg>
+    );
+  }
+
   if (network === "instagram") {
     return (
       <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">

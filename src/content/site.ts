@@ -15,8 +15,9 @@ export const site = {
     en: "Beni Suef, Egypt",
   },
   social: [
-    { label: "Instagram", href: "https://www.instagram.com/seetagency123/" },
-  ] as { label: string; href: string }[],
+    { network: "instagram", label: "Instagram", href: "https://www.instagram.com/seetagency123/" },
+    { network: "facebook", label: "Facebook", href: "https://www.facebook.com/profile.php?id=61591667284562" },
+  ] as { network: "instagram" | "facebook"; label: string; href: string }[],
   analytics: {
     gaId: process.env.NEXT_PUBLIC_GA_ID ?? "",
     metaPixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID ?? "",

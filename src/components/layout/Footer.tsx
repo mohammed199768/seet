@@ -10,6 +10,13 @@ import styles from "./Footer.module.css";
 
 export function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
   const year = 2026;
+  const socialLabel = (network: "instagram" | "facebook") => {
+    if (network === "facebook") {
+      return lang === "ar" ? "تابعنا على فيسبوك" : "Follow us on Facebook";
+    }
+    return lang === "ar" ? "تابعنا على إنستغرام" : "Follow us on Instagram";
+  };
+
   return (
     <footer className={styles.footer} data-theme="ink">
       <div className={`wrap ${styles.top}`}>
@@ -87,10 +94,10 @@ export function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={lang === "ar" ? "تابعنا على إنستغرام" : "Follow us on Instagram"}
+                aria-label={socialLabel(social.network)}
                 key={social.href}
               >
-                <SocialIcon network="instagram" />
+                <SocialIcon network={social.network} />
                 <span>{social.label}</span>
               </a>
             ))}

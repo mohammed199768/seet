@@ -47,6 +47,9 @@
 .link:nth-child(2) {
   animation-delay: -2.4s;
 }
+.link:nth-child(3) {
+  animation-delay: -3.7s;
+}
 .link:hover,
 .link:focus-visible {
   background: var(--navy);
@@ -72,6 +75,9 @@
 }
 .instagram {
   --social-accent: #a62a75;
+}
+.facebook {
+  --social-accent: #1877f2;
 }
 .label {
   min-width: 74px;
@@ -99,27 +105,15 @@
   .link,
   :global([dir="rtl"]) .link {
     display: grid;
-    width: auto;
-    min-height: 58px;
-    grid-template-columns: 40px auto;
-    padding: 8px 16px 8px 8px;
-    box-shadow: -4px 4px 0 var(--ink);
-  }
-  :global([dir="rtl"]) .link {
-    padding: 8px 8px 8px 16px;
-  }
-  .icon {
-    width: 40px;
-    height: 40px;
-  }
-}
-@media (max-width: 360px) {
-  .link,
-  :global([dir="rtl"]) .link {
     width: 56px;
     min-height: 56px;
     grid-template-columns: 1fr;
     padding: 6px;
+    box-shadow: -4px 4px 0 var(--ink);
+  }
+  .icon {
+    width: 40px;
+    height: 40px;
   }
   .label {
     display: none;
