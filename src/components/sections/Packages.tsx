@@ -31,14 +31,19 @@ export function Packages({ lang, t, preview = false }: { lang: Locale; t: Packag
           {socialPackages.map((plan) => {
             const features = preview ? plan.features[lang].slice(0, 6) : plan.features[lang];
             return (
-              <article id={plan.id} key={plan.id} className={styles.card} data-featured={plan.id === "premium" ? "1" : undefined} data-r>
+              <article
+                id={plan.id}
+                key={plan.id}
+                className={styles.card}
+                data-featured={plan.recommended ? "1" : undefined}
+                data-r
+              >
                 <div className={styles.cardTop}>
                   <span className={styles.number} aria-hidden="true">{plan.number}</span>
                   {plan.recommended && <span className={styles.badge}>{t.recommended}</span>}
                 </div>
                 <div className={styles.planName}>
                   <h3 className={styles.planTitle}>{plan.title}</h3>
-                  <p>{plan.name[lang]}</p>
                 </div>
                 <p className={styles.price} dir="auto">{plan.price[lang]}</p>
                 <p className={styles.description}>{plan.description[lang]}</p>
@@ -46,7 +51,12 @@ export function Packages({ lang, t, preview = false }: { lang: Locale; t: Packag
                   {features.map((feature) => <li key={feature}>{feature}</li>)}
                 </ul>
                 <div className={styles.action}>
-                  <Button href={href(lang, `/contact?service=social-media&package=${plan.id}`)} variant={plan.id === "premium" ? "white" : "navy"} magnetic={false}>
+                  <Button
+                    href={href(lang, `/contact?service=social-media&package=${plan.id}`)}
+                    variant={plan.recommended ? "white" : "navy"}
+                    className={styles.packageButton}
+                    magnetic={false}
+                  >
                     {t.choose} {plan.title}
                   </Button>
                 </div>

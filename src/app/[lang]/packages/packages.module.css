@@ -53,3 +53,30 @@
     grid-template-columns: 1fr;
   }
 }
+@media (max-width: 520px) {
+  .details {
+    padding-block: 64px;
+  }
+  .detailGrid {
+    gap: 56px;
+  }
+  .panel {
+    min-width: 0;
+    gap: 22px;
+  }
+  .list li {
+    grid-template-columns: 9px minmax(0, 1fr);
+    gap: 9px;
+    overflow-wrap: anywhere;
+  }
+  .list li::before {
+    width: 7px;
+    height: 7px;
+  }
+  .promise {
+    padding-block: 72px;
+  }
+  .promiseText {
+    max-width: 100%;
+  }
+}
