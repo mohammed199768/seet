@@ -47,7 +47,7 @@ export default async function PackagesPage({ params }: PackagesPageProps) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(ld) }} />
-      <PageHero title={t.packagesPage.title} intro={t.packagesPage.intro} />
+      <PageHero title={t.packagesPage.title} intro={t.packagesPage.intro} latinTitle />
       <Packages lang={lang} t={t.packagesSection} />
 
       <section className={styles.details}>

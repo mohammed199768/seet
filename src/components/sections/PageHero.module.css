@@ -15,6 +15,12 @@
   font-size: clamp(3.5rem, 1rem + 13vw, 15rem);
   line-height: 1;
 }
+.latinTitle {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: left;
+  font-size: clamp(3.5rem, 12vw, 13.5rem);
+}
 :lang(ar) .title {
   line-height: 1.15;
 }
