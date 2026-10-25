@@ -67,20 +67,10 @@ export function ContactForm({ lang, t, services }: { lang: Locale; t: Dictionary
     }
     setStatus("sending");
     try {
-      const r = await fetch(formspreeEndpoint, {
+      const r = await fetch("/api/contact", {
         method: "POST",
         headers: { Accept: "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.name,
-          company: data.company,
-          contact: data.contact,
-          service: data.service,
-          package: data.package,
-          message: data.message,
-          language: data.lang,
-          consent: data.consent ? "yes" : "no",
-          _subject: `New SEET project request — ${data.name}`,
-        }),
+        body: JSON.stringify(data),
       });
       if (!r.ok) throw new Error(String(r.status));
       setStatus("sent");

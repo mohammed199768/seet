@@ -12,6 +12,7 @@ export const contactSchema = z.object({
     .trim()
     .refine((v) => email.safeParse(v).success || phone.safeParse(v).success, "contact"),
   service: z.string().trim().max(60).optional().default(""),
+  package: z.string().trim().max(60).optional().default(""),
   message: z.string().trim().min(10, "message").max(4000, "message"),
   consent: z.literal(true, { message: "consent" }),
   lang: z.enum(["ar", "en"]),

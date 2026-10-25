@@ -38,7 +38,16 @@ To rebuild the optimized work library from the supplied source folder, run `npm 
 
 ## Contact form
 
-The form validates in the browser and submits directly to the configured Formspree form (`xzedyqwk`). Its native `action` also provides a non-JavaScript fallback.
+The browser submits to `POST /api/contact`. The route validates the request, sends it to Formspree (`xzedyqwk`), then returns success immediately. After the response, it makes best-effort Resend deliveries: a receipt to the visitor when their contact value is an email, and the full request to the company inbox. Missing Resend configuration, exhausted credits, timeouts or API failures are logged but never turn a successful Formspree submission into a visitor-facing error. The form's native Formspree `action` remains as a non-JavaScript fallback.
+
+Configure the server-only email variables in the deployment environment:
+
+```
+RESEND_API_KEY=re_...                       # private; never prefix with NEXT_PUBLIC_
+CONTACT_TO_EMAIL=team@your-company-domain  # receives the full enquiry
+```
+
+Resend sends from `SEET <noreply@seet.agency>`, so `seet.agency` must be verified in the Resend dashboard.
 
 ## Other environment variables
 
