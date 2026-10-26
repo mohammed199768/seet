@@ -29,6 +29,7 @@ export function FeedRail({
 }) {
   const root = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
+  const originalOrder = useRef(new WeakMap<HTMLElement, HTMLElement[]>());
 
   useGSAP(
     () => {
@@ -73,13 +74,26 @@ export function FeedRail({
     { scope: root },
   );
 
-  // Hover: the feed reshuffles — first post jumps to the end, the rest slide up a slot.
+  // Keep each card's reference layout so the hover shuffle can be reversed.
   const shuffle = (grid: HTMLElement | null) => {
     if (!grid || reducedMotion()) return;
     const tiles = Array.from(grid.children) as HTMLElement[];
+    originalOrder.current.set(grid, tiles);
+    gsap.killTweensOf(tiles);
     const state = Flip.getState(tiles);
     grid.appendChild(tiles[0]);
     Flip.from(state, { duration: 0.7, ease: "expo.out", stagger: 0.015 });
+  };
+
+  const restore = (grid: HTMLElement | null) => {
+    if (!grid) return;
+    const order = originalOrder.current.get(grid);
+    if (!order) return;
+    const tiles = Array.from(grid.children) as HTMLElement[];
+    gsap.killTweensOf(tiles);
+    const state = reducedMotion() ? null : Flip.getState(tiles);
+    grid.append(...order);
+    if (state) Flip.from(state, { duration: 0.7, ease: "expo.out", stagger: 0.015 });
   };
 
   return (
@@ -104,7 +118,13 @@ export function FeedRail({
 
         <div className={styles.cards} data-lenis-prevent-touch>
         {cards.map((c) => (
-          <article key={c.slug} className={styles.card} data-card onPointerEnter={(e) => shuffle(e.currentTarget.querySelector("[data-grid]"))}>
+          <article
+            key={c.slug}
+            className={styles.card}
+            data-card
+            onPointerEnter={(e) => shuffle(e.currentTarget.querySelector("[data-grid]"))}
+            onPointerLeave={(e) => restore(e.currentTarget.querySelector("[data-grid]"))}
+          >
             <TLink href={c.href} className={styles.cardLink} data-cursor="view">
               <div className={styles.grid} data-grid>
                 {c.posts.slice(0, 9).map((src) => (
