@@ -20,14 +20,15 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
     .map((s) => clientBySlug(s)!)
     .map((c) => {
       const posts = postsOf(c);
-      // the chosen cover leads the mini-feed
-      const cover = postSrc(c.slug, c.cover);
+      // The reference layout for Next Level starts at post 16. Other matching
+      // project grids already follow their exported numeric order.
+      const layoutLead = c.slug === "next-level" ? posts.slice(15, 24) : [];
       return {
         slug: c.slug,
         href: href(lang, `/work/${c.slug}`),
         name: c.name[lang],
         sector: sectors[c.sector][lang],
-        posts: [cover, ...posts.filter((p) => p !== cover)],
+        posts: [...layoutLead, ...posts.filter((p) => !layoutLead.includes(p))],
       };
     });
 

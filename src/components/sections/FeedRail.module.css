@@ -63,6 +63,7 @@
 }
 .grid {
   display: grid;
+  direction: ltr;
   grid-template-columns: repeat(3, 1fr);
   gap: 3px;
   padding: 3px;
