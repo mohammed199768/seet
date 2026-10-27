@@ -4,6 +4,8 @@ export const defaultLocale: Locale = "en";
 
 export const isLocale = (v: string): v is Locale => (locales as readonly string[]).includes(v);
 export const dirOf = (l: Locale) => (l === "ar" ? "rtl" : "ltr");
+/** Open Graph locale per language (the agency is based in Egypt). */
+export const ogLocale: Record<Locale, string> = { ar: "ar_EG", en: "en_US" };
 export const otherLocale = (l: Locale): Locale => (l === "ar" ? "en" : "ar");
 
 /** Prefix a path with the locale: href("en", "/work") -> "/en/work" */

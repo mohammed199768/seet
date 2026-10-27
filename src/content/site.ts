@@ -3,7 +3,7 @@
  * the handoff lists phone, email, domain and social URLs as still to be provided.
  */
 export const site = {
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://seet.agency",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.seet.agency",
   name: { ar: "صيت", en: "SEET" },
   legalNameNote: "Marketing name only — do not mix with SAYT / Media Creative legal wording.",
   phone: "", // e.g. "+20 100 000 0000"

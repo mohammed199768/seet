@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { Suspense, useEffect, useRef, useState, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { gsap, reducedMotion } from "@/lib/gsap";
 import { contactSchema, type ErrorKey } from "@/lib/contact-schema";
@@ -12,10 +12,34 @@ import styles from "./ContactForm.module.css";
 type Status = "idle" | "sending" | "sent" | "error";
 const formspreeEndpoint = "https://formspree.io/f/xzedyqwk";
 
-export function ContactForm({ lang, t, services }: { lang: Locale; t: Dictionary["form"]; services: { slug: string; title: string }[] }) {
-  const params = useSearchParams();
-  const preset = params.get("service") ?? "";
-  const packagePreset = params.get("package") ?? "";
+type ServiceOption = { slug: string; title: string };
+
+function ServiceSelect({ t, services, preset = "" }: { t: Dictionary["form"]; services: ServiceOption[]; preset?: string }) {
+  return (
+    <select name="service" defaultValue={services.some((s) => s.slug === preset) ? preset : ""}>
+      <option value="">{t.serviceNone}</option>
+      {services.map((s) => (
+        <option key={s.slug} value={s.slug}>
+          {s.title}
+        </option>
+      ))}
+    </select>
+  );
+}
+
+/*
+ * ?service= and ?package= presets (from the services and packages pages) are read in these two
+ * small islands, so the rest of the form is in the server HTML; until hydration they render empty.
+ */
+function PresetService(props: { t: Dictionary["form"]; services: ServiceOption[] }) {
+  return <ServiceSelect {...props} preset={useSearchParams().get("service") ?? ""} />;
+}
+
+function PresetPackage() {
+  return <input type="hidden" name="package" value={useSearchParams().get("package") ?? ""} />;
+}
+
+export function ContactForm({ lang, t, services }: { lang: Locale; t: Dictionary["form"]; services: ServiceOption[] }) {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Partial<Record<ErrorKey, boolean>>>({});
   const started = useRef(0);
@@ -123,7 +147,9 @@ export function ContactForm({ lang, t, services }: { lang: Locale; t: Dictionary
 
   return (
     <form ref={form} className={styles.form} action={formspreeEndpoint} method="POST" onSubmit={submit} noValidate>
-      <input type="hidden" name="package" value={packagePreset} />
+      <Suspense fallback={<input type="hidden" name="package" value="" />}>
+        <PresetPackage />
+      </Suspense>
       <div className={styles.row}>
         <label className={styles.field}>
           <span className={styles.lbl}>{t.name}</span>
@@ -154,14 +180,9 @@ export function ContactForm({ lang, t, services }: { lang: Locale; t: Dictionary
         <label className={styles.field}>
           <span className={styles.lbl}>{t.service}</span>
           <span className={styles.select}>
-            <select name="service" defaultValue={services.some((s) => s.slug === preset) ? preset : ""}>
-              <option value="">{t.serviceNone}</option>
-              {services.map((s) => (
-                <option key={s.slug} value={s.slug}>
-                  {s.title}
-                </option>
-              ))}
-            </select>
+            <Suspense fallback={<ServiceSelect t={t} services={services} />}>
+              <PresetService t={t} services={services} />
+            </Suspense>
           </span>
         </label>
       </div>

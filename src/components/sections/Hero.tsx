@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { preload } from "react-dom";
 import { gsap, useGSAP, reducedMotion, skipIntro } from "@/lib/gsap";
 import { onReady } from "@/components/ui/Preloader";
 import { Lines } from "@/components/motion/Reveal";
@@ -10,7 +11,11 @@ import { href, type Locale } from "@/lib/i18n";
 import type { Dictionary } from "@/dictionaries/ar";
 import styles from "./Hero.module.css";
 
+const poster = "/media/brand-loop-poster.webp";
+
 export function Hero({ lang, t }: { lang: Locale; t: Dictionary["hero"] }) {
+  // The film's poster is the first large paint on phones: fetch it with the HTML, not after the video tag.
+  preload(poster, { as: "image", fetchPriority: "high" });
   const root = useRef<HTMLElement>(null);
   const slot = useRef<HTMLDivElement>(null);
   const reel = useRef<HTMLDivElement>(null);
@@ -121,7 +126,7 @@ export function Hero({ lang, t }: { lang: Locale; t: Dictionary["hero"] }) {
                 webm="/media/brand-loop.webm"
                 mp4Small="/media/brand-loop-sm.mp4"
                 webmSmall="/media/brand-loop-sm.webm"
-                poster="/media/brand-loop-poster.webp"
+                poster={poster}
                 className={styles.video}
               />
             </div>
@@ -130,7 +135,7 @@ export function Hero({ lang, t }: { lang: Locale; t: Dictionary["hero"] }) {
       </div>
 
       <div ref={reel} className={styles.reel} aria-hidden="true">
-        <LazyVideo eager mp4="/media/brand-loop.mp4" webm="/media/brand-loop.webm" poster="/media/brand-loop-poster.webp" className={styles.video} />
+        <LazyVideo eager mp4="/media/brand-loop.mp4" webm="/media/brand-loop.webm" poster={poster} className={styles.video} />
       </div>
     </section>
   );

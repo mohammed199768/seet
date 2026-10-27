@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getDict, resolveLang } from "@/lib/dictionary";
-import { href, locales } from "@/lib/i18n";
+import { href, locales, ogLocale, otherLocale } from "@/lib/i18n";
 import { jsonLd } from "@/lib/jsonld";
 import { clientBySlug, clients, postSrc, postsOf, sectors } from "@/content/clients";
 import { serviceBySlug } from "@/content/services";
@@ -26,7 +26,14 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/work/[clie
     title: c.name[lang],
     description: c.summary[lang],
     alternates: { canonical: `/${lang}/work/${c.slug}`, languages: { ar: `/ar/work/${c.slug}`, en: `/en/work/${c.slug}`, "x-default": `/en/work/${c.slug}` } },
-    openGraph: { images: [{ url: postSrc(c.slug, c.cover), width: 1080, height: 1350, alt: c.name[lang] }] },
+    // a page-level openGraph replaces the layout's, so restate the shared fields
+    openGraph: {
+      type: "website",
+      siteName: lang === "ar" ? "صيت" : "SEET Marketing Agency",
+      locale: ogLocale[lang],
+      alternateLocale: ogLocale[otherLocale(lang)],
+      images: [{ url: postSrc(c.slug, c.cover), width: 1080, height: 1350, alt: c.name[lang] }],
+    },
   };
 }
 

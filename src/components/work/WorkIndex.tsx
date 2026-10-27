@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import { gsap, useGSAP, Flip, reducedMotion, whenSeen } from "@/lib/gsap";
 import { TLink } from "@/components/providers/Transition";
 import styles from "./WorkIndex.module.css";
@@ -17,9 +17,19 @@ export type WorkCard = {
   count: string;
 };
 
+// The hover flick only runs for a mouse without reduced motion; elsewhere its posts would load unseen.
+const flickQuery = "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)";
+const subscribeFlick = (cb: () => void) => {
+  const mq = window.matchMedia(flickQuery);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+};
+const canFlick = () => window.matchMedia(flickQuery).matches;
+
 export function WorkIndex({ cards, filters }: { cards: WorkCard[]; filters: { key: string; label: string; n: number }[] }) {
   const root = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState("all");
+  const flicks = useSyncExternalStore(subscribeFlick, canFlick, () => false);
 
   const pick = (key: string) => {
     if (key === active) return;
@@ -54,6 +64,7 @@ export function WorkIndex({ cards, filters }: { cards: WorkCard[]; filters: { ke
   const flick = (el: HTMLElement, on: boolean) => {
     if (reducedMotion()) return;
     const imgs = el.querySelectorAll<HTMLElement>("[data-flick]");
+    if (!imgs.length) return;
     gsap.killTweensOf(imgs);
     if (!on) {
       gsap.to(imgs, { opacity: 0, duration: 0.3 });
@@ -94,7 +105,7 @@ export function WorkIndex({ cards, filters }: { cards: WorkCard[]; filters: { ke
               >
                 <span className={styles.media}>
                   <Image src={c.cover} alt="" fill sizes="(min-width: 1100px) 30vw, (min-width: 640px) 45vw, 92vw" quality={80} loading="lazy" />
-                  {c.flick.map((src) => (
+                  {flicks && c.flick.map((src) => (
                     <span key={src} className={styles.flick} data-flick>
                       <Image src={src} alt="" fill sizes="(min-width: 1100px) 30vw, (min-width: 640px) 45vw, 92vw" quality={80} loading="lazy" />
                     </span>

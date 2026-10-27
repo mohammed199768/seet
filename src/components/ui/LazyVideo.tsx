@@ -5,7 +5,9 @@ import { reducedMotion } from "@/lib/gsap";
 
 /**
  * Muted, inline, looping video that only fetches when near the viewport and pauses
- * off-screen. With reduced motion it stays on its poster.
+ * off-screen. On the first page load it also waits for the window load event (or 3s), so
+ * the video never competes with the poster, fonts and scripts the first paint needs.
+ * With reduced motion it stays on its poster.
  */
 export function LazyVideo({
   mp4,
@@ -33,17 +35,33 @@ export function LazyVideo({
   useEffect(() => {
     const v = ref.current;
     if (!v || reducedMotion()) return;
+    let near = false;
+    let settled = document.readyState === "complete";
+    const start = () => {
+      if (!near || !settled) return;
+      setLoad(true);
+      v.play().catch(() => {});
+    };
+    const settle = () => {
+      settled = true;
+      start();
+    };
+    const timer = settled ? undefined : setTimeout(settle, 3000);
+    if (!settled) window.addEventListener("load", settle, { once: true });
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting) {
-          setLoad(true);
-          v.play().catch(() => {});
-        } else v.pause();
+        near = e.isIntersecting;
+        if (near) start();
+        else v.pause();
       },
       { rootMargin: eager ? "100% 0px" : "25% 0px" },
     );
     io.observe(v);
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      clearTimeout(timer);
+      window.removeEventListener("load", settle);
+    };
   }, [eager]);
 
   useEffect(() => {

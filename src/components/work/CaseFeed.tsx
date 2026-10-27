@@ -113,7 +113,8 @@ export function CaseFeed({ posts, name, t, rtl }: { posts: string[]; name: strin
           }}
         >
           <div className={styles.frame} data-img>
-            <Image src={posts[open]} alt={`${name} ${open + 1}`} fill sizes="(min-width: 900px) 56vh, 90vw" quality={90} preload />
+            {/* the enlarged view always gets the full-resolution post */}
+            <Image src={posts[open]} alt={`${name} ${open + 1}`} fill unoptimized preload />
           </div>
           <div className={styles.bar}>
             <button type="button" className={styles.ctrl} onClick={() => go(-1)} aria-label={t.prev}>

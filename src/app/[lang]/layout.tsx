@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "../globals.css";
 import { sans, display, label } from "@/lib/fonts";
-import { dirOf, locales, type Locale } from "@/lib/i18n";
+import { dirOf, locales, ogLocale, otherLocale, type Locale } from "@/lib/i18n";
 import { getDict, resolveLang } from "@/lib/dictionary";
 import { site } from "@/content/site";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
@@ -39,7 +39,8 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
     openGraph: {
       type: "website",
       siteName: lang === "ar" ? "صيت" : "SEET Marketing Agency",
-      locale: lang === "ar" ? "ar_AR" : "en_US",
+      locale: ogLocale[lang],
+      alternateLocale: ogLocale[otherLocale(lang)],
       title: t.meta.title,
       description: t.meta.description,
     },

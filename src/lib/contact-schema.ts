@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+// Skip zod's eval-based fast path: one small form gains nothing from it, and it trips the CSP.
+z.config({ jitless: true });
+
 const email = z.string().email();
 const phone = z.string().regex(/^\+?[\d\s\-()]{7,20}$/);
 

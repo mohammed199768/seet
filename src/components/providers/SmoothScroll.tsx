@@ -57,18 +57,18 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     };
   }, [pathname]);
 
-  // Late font and image loads shift layout; re-measure once they settle.
+  // Late font and image loads shift layout; re-measure once they settle. ScrollTrigger already
+  // refreshes itself on window load, so only fonts that finish after that need another pass.
   useEffect(() => {
     let t: ReturnType<typeof setTimeout>;
-    const refresh = () => {
-      clearTimeout(t);
+    let live = true;
+    document.fonts?.ready.then(() => {
+      if (!live || document.readyState !== "complete") return;
       t = setTimeout(() => ScrollTrigger.refresh(), 150);
-    };
-    document.fonts?.ready.then(refresh);
-    window.addEventListener("load", refresh);
+    });
     return () => {
+      live = false;
       clearTimeout(t);
-      window.removeEventListener("load", refresh);
     };
   }, []);
 

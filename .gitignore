@@ -20,6 +20,9 @@
 # production
 /build
 
+# generated image variants (scripts/image-variants.mjs)
+/public/img/
+
 # misc
 .DS_Store
 *.pem

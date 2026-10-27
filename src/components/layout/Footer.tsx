@@ -75,7 +75,7 @@ export function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
               </TLink>
             </li>
           </ul>
-          <div className={styles.socials} aria-label={lang === "ar" ? "روابط التواصل الاجتماعي" : "Social links"}>
+          <div className={styles.socials} role="group" aria-label={lang === "ar" ? "روابط التواصل الاجتماعي" : "Social links"}>
             {site.whatsapp && (
               <a
                 className={styles.socialLink}

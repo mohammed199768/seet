@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import { getDict, resolveLang } from "@/lib/dictionary";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
@@ -72,9 +71,7 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
         </div>
         <Reveal intro delay={0.5} className={styles.formWrap}>
           <div data-r>
-            <Suspense>
-              <ContactForm lang={lang} t={t.form} services={list} />
-            </Suspense>
+            <ContactForm lang={lang} t={t.form} services={list} />
           </div>
         </Reveal>
       </div>

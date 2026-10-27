@@ -35,7 +35,8 @@ export function Logo({
       quality={90}
       sizes={`${w}px`}
       className={className}
-      style={{ width: w, height: "auto" }}
+      // the master's ratio, not the loaded variant's (resized files round to whole pixels)
+      style={{ width: w, height: "auto", aspectRatio: `${f.w} / ${f.h}` }}
       draggable={false}
     />
   );

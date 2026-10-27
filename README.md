@@ -36,6 +36,8 @@ Pages, the sitemap and static params all follow from that entry.
 
 To rebuild the optimized work library from the supplied source folder, run `npm run images:work`. The script keeps Tablia untouched, excludes contact sheets and empty slices, and exports numbered 1080px WebP files.
 
+Responsive images: the host's image optimizer is off, so `scripts/image-variants.mjs` (run automatically before `dev` and `build`, or via `npm run images:variants`) writes fixed-width WebP copies of everything in `public/{work,media,brand}` to `public/img/<width>/` (git-ignored, cached in `.next/cache`). `src/lib/image-loader.ts` maps each `next/image` srcset width to those files, so keep using `<Image>` with an accurate `sizes` prop and new images are picked up on the next build. `src/lib/image-variants.json` is generated: commit it when it changes.
+
 ## Contact form
 
 The browser submits to `POST /api/contact`. The route validates the request, sends it to Formspree (`xzedyqwk`), then returns success immediately. After the response, it makes best-effort Resend deliveries: a receipt to the visitor when their contact value is an email, and the full request to the company inbox. Missing Resend configuration, exhausted credits, timeouts or API failures are logged but never turn a successful Formspree submission into a visitor-facing error. The form's native Formspree `action` remains as a non-JavaScript fallback.
