@@ -30,6 +30,10 @@ const nextConfig: NextConfig = {
     deviceSizes: variants.deviceSizes,
     imageSizes: variants.imageSizes,
   },
+  // The packages page was removed; send old and shared links to the services page instead of a 404.
+  async redirects() {
+    return [{ source: "/:lang(ar|en)/packages", destination: "/:lang/services", permanent: true }];
+  },
   async headers() {
     return [
       {

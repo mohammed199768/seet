@@ -13,7 +13,6 @@ type ContactPayload = {
   company: string;
   contact: string;
   service: string;
-  package: string;
   message: string;
   lang: "ar" | "en";
   receivedAt: string;
@@ -41,7 +40,6 @@ function clientEmail(payload: ContactPayload) {
     : `Hi ${payload.name}, thanks for contacting SEET. We received your request and will review the details and get back to you soon.`;
   const summary = ar ? "ملخص طلبك" : "Your request";
   const serviceLabel = ar ? "الخدمة" : "Service";
-  const packageLabel = ar ? "الباقة" : "Package";
   const messageLabel = ar ? "الرسالة" : "Message";
   const fallback = ar ? "غير محددة" : "Not specified";
 
@@ -53,7 +51,6 @@ function clientEmail(payload: ContactPayload) {
       intro,
       "",
       `${serviceLabel}: ${payload.service || fallback}`,
-      ...(payload.package ? [`${packageLabel}: ${payload.package}`] : []),
       `${messageLabel}: ${payload.message}`,
       "",
       "SEET Marketing Agency",
@@ -71,7 +68,6 @@ function clientEmail(payload: ContactPayload) {
         <h2 style="margin:0 0 12px;color:#2b2a68;font-size:18px">${summary}</h2>
         <div style="border-top:2px solid #100f0d">
           <p style="margin:0;padding:12px 0;border-bottom:1px solid #dedee7"><strong>${serviceLabel}:</strong> ${escapeHtml(payload.service || fallback)}</p>
-          ${payload.package ? `<p style="margin:0;padding:12px 0;border-bottom:1px solid #dedee7"><strong>${packageLabel}:</strong> ${escapeHtml(payload.package)}</p>` : ""}
           <p style="margin:0;padding:12px 0;border-bottom:1px solid #dedee7;white-space:pre-wrap"><strong>${messageLabel}:</strong><br>${escapeHtml(payload.message)}</p>
         </div>
         <p style="margin:28px 0 0;color:#666;font-size:13px">SEET Marketing Agency · Beni Suef, Egypt</p>
@@ -88,7 +84,6 @@ function companyEmail(payload: ContactPayload) {
     ["Company", payload.company || "—"],
     ["Contact", payload.contact],
     ["Service", payload.service || "—"],
-    ["Package", payload.package || "—"],
     ["Language", payload.lang],
     ["Received", payload.receivedAt],
   ];
@@ -219,7 +214,6 @@ export async function POST(req: Request) {
     company: data.company,
     contact: data.contact,
     service: data.service,
-    package: data.package,
     message: data.message,
     lang: data.lang,
     receivedAt: new Date().toISOString(),
@@ -234,7 +228,6 @@ export async function POST(req: Request) {
         company: payload.company,
         contact: payload.contact,
         service: payload.service,
-        package: payload.package,
         message: payload.message,
         language: payload.lang,
         consent: "yes",

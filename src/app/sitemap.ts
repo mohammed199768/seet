@@ -4,7 +4,7 @@ import { clients } from "@/content/clients";
 import { locales } from "@/lib/i18n";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const paths = ["", "/work", "/services", "/packages", "/about", "/contact", ...clients.map((c) => `/work/${c.slug}`)];
+  const paths = ["", "/work", "/services", "/about", "/contact", ...clients.map((c) => `/work/${c.slug}`)];
   return paths.flatMap((p) =>
     locales.map((l) => ({
       url: `${site.url}/${l}${p}`,

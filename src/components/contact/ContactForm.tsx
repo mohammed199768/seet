@@ -28,15 +28,11 @@ function ServiceSelect({ t, services, preset = "" }: { t: Dictionary["form"]; se
 }
 
 /*
- * ?service= and ?package= presets (from the services and packages pages) are read in these two
- * small islands, so the rest of the form is in the server HTML; until hydration they render empty.
+ * The ?service= preset (from the services page) is read in this small island, so the rest of the
+ * form is in the server HTML; until hydration the select starts empty.
  */
 function PresetService(props: { t: Dictionary["form"]; services: ServiceOption[] }) {
   return <ServiceSelect {...props} preset={useSearchParams().get("service") ?? ""} />;
-}
-
-function PresetPackage() {
-  return <input type="hidden" name="package" value={useSearchParams().get("package") ?? ""} />;
 }
 
 export function ContactForm({ lang, t, services }: { lang: Locale; t: Dictionary["form"]; services: ServiceOption[] }) {
@@ -58,7 +54,6 @@ export function ContactForm({ lang, t, services }: { lang: Locale; t: Dictionary
       company: String(fd.get("company") ?? ""),
       contact: String(fd.get("contact") ?? ""),
       service: String(fd.get("service") ?? ""),
-      package: String(fd.get("package") ?? ""),
       message: String(fd.get("message") ?? ""),
       consent: fd.get("consent") === "on",
       website: String(fd.get("website") ?? ""),
@@ -147,9 +142,6 @@ export function ContactForm({ lang, t, services }: { lang: Locale; t: Dictionary
 
   return (
     <form ref={form} className={styles.form} action={formspreeEndpoint} method="POST" onSubmit={submit} noValidate>
-      <Suspense fallback={<input type="hidden" name="package" value="" />}>
-        <PresetPackage />
-      </Suspense>
       <div className={styles.row}>
         <label className={styles.field}>
           <span className={styles.lbl}>{t.name}</span>

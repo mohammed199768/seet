@@ -7,7 +7,6 @@ import { Ticker } from "@/components/sections/Ticker";
 import { Statement } from "@/components/sections/Statement";
 import { FeedRail } from "@/components/sections/FeedRail";
 import { ServicesList } from "@/components/sections/ServicesList";
-import { Packages } from "@/components/sections/Packages";
 import { Process } from "@/components/sections/Process";
 import { Studio } from "@/components/sections/Studio";
 import { Cta } from "@/components/sections/Cta";
@@ -65,7 +64,6 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
           image: s.image,
         }))}
       />
-      <Packages lang={lang} t={t.packagesSection} preview />
       <Process eyebrow={t.process.eyebrow} title={t.process.title} steps={t.process.steps} />
       <Studio
         eyebrow={t.studio.eyebrow}

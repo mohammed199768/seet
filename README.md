@@ -19,7 +19,6 @@ npm run build && npm start
 |---|---|
 | Phone, email, WhatsApp, social links, analytics IDs | `src/content/site.ts` (empty fields stay hidden on the site) |
 | Services (order, copy, scope, image) | `src/content/services.ts` |
-| Social media packages, benefits and terms | `src/content/packages.ts` |
 | Clients / case studies (name, sector, summary, cover, post count) | `src/content/clients.ts` |
 | All interface copy, both languages | `src/dictionaries/ar.ts`, `src/dictionaries/en.ts` |
 | Brand tokens (colours, type scale, extrusion) | `src/app/globals.css` |

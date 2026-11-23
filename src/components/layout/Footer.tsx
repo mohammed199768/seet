@@ -28,7 +28,7 @@ export function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
         <nav className={styles.col} aria-label={t.footer.explore}>
           <h2 className="label muted">{t.footer.explore}</h2>
           <ul>
-            {(["work", "services", "packages", "about", "contact"] as const).map((k) => (
+            {(["work", "services", "about", "contact"] as const).map((k) => (
               <li key={k}>
                 <TLink href={href(lang, `/${k}`)} className={styles.link}>
                   {t.nav[k]}
